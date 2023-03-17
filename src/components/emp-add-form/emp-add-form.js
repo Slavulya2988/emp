@@ -15,13 +15,20 @@ class EmpAddForm extends Component {
         })
     }
 
+    onSave = (e) => {
+        e.preventDefault();
+        this.props.onAdd(this.state.name, this.state.salary)
+
+    }
+
     render() {
         const { name, salary } = this.state;
         return (
             <div className="app-add-form">
                 <h3>Додати нового працівничка</h3>
                 <form
-                    className="add-form d-flex">
+                    className="add-form d-flex"
+                    onSubmit={this.onSave}>
                     <input type="text"
                         className="form-control new-post-label"
                         placeholder="Як його звати?"

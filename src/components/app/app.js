@@ -18,6 +18,27 @@ class App extends Component {
                 { name: 'Ангелка Тролова', salary: 5000, increase: false, id: 3 }
             ]
         }
+
+        this.maxId = 4;
+    }
+
+    deleteItem = (kod) => {
+        this.setState(state => {
+            return { data: state.data.filter(item => item.id !== kod) }
+        })
+    }
+
+    addItem = (name, salary) => {
+        const newItem = {
+            name,
+            salary,
+            increase: false,
+            id: this.maxId++
+        }
+        this.setState(state => {
+            const newArr = [...state.data, newItem]
+            return { data: newArr }
+        })
     }
 
     render() {
@@ -33,9 +54,11 @@ class App extends Component {
 
                 <EmpList
                     DB={data}
-                    onDeleteApp={id => console.log(id)}
+                    onDeleteApp={this.deleteItem}
+
                 />
-                <EmpAddForm />
+                <EmpAddForm
+                    onAdd={this.addItem} />
             </div>
         );
     }

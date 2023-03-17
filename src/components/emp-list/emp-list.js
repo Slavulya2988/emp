@@ -12,7 +12,9 @@ const EmpList = ({ DB, onDeleteApp }) => {
             <EmpListItem
                 key={id}
                 {...itemProps}
-                onDeleteEL={() => onDeleteApp(id)} />
+                onDeleteEL={() => onDeleteApp(id)}
+
+            />
         )
     })
 
