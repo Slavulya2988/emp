@@ -13,9 +13,9 @@ class App extends Component {
         super(props);
         this.state = {
             data: [
-                { name: 'Миколка Вершігорьский', salary: 800, increase: false, id: 1 },
-                { name: 'Олежик Мурашенко', salary: 3000, increase: true, id: 2 },
-                { name: 'Ангелка Тролова', salary: 5000, increase: false, id: 3 }
+                { name: 'Миколка Вершігорьский', salary: 800, increase: false, rise: true, id: 1 },
+                { name: 'Олежик Мурашенко', salary: 3000, increase: true, rise: false, id: 2 },
+                { name: 'Ангелка Тролова', salary: 5000, increase: false, rise: false, id: 3 }
             ]
         }
 
@@ -23,8 +23,8 @@ class App extends Component {
     }
 
     deleteItem = (kod) => {
-        this.setState(state => {
-            return { data: state.data.filter(item => item.id !== kod) }
+        this.setState(({ data }) => {
+            return { data: data.filter(item => item.id !== kod) }
         })
     }
 
@@ -33,19 +33,36 @@ class App extends Component {
             name,
             salary,
             increase: false,
+            rise: false,
             id: this.maxId++
         }
-        this.setState(state => {
-            const newArr = [...state.data, newItem]
+        this.setState(({ data }) => {
+            const newArr = [...data, newItem]
             return { data: newArr }
         })
     }
 
+    ToggleRiseIncrease = (id, prop) => {
+        this.setState(({ data }) => ({
+            data: data.map(item => {
+                if (item.id === id) {
+                    return { ...item, [prop]: !item[prop] }
+                }
+                return item;
+            })
+        }))
+
+    }
+
+
     render() {
+        const emp = this.state.data.length;
+        const empIncrease = this.state.data.filter(item => item.increase).length;
         const { data } = this.state
         return (
             <div className="app">
-                <AppInfo />
+                <AppInfo empCount={emp}
+                    empIncrease={empIncrease} />
 
                 <div className="search-panel">
                     <SearchPanel />
@@ -55,8 +72,9 @@ class App extends Component {
                 <EmpList
                     DB={data}
                     onDeleteApp={this.deleteItem}
-
+                    onToggle={this.ToggleRiseIncrease}
                 />
+
                 <EmpAddForm
                     onAdd={this.addItem} />
             </div>
