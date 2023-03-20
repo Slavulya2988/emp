@@ -20,6 +20,7 @@ class App extends Component {
         }
 
         this.maxId = 4;
+        this.term = ''
     }
 
     deleteItem = (kod) => {
@@ -54,23 +55,38 @@ class App extends Component {
 
     }
 
+    searchEmp = (massiv, term) => {
+        if (term.length === 0) {
+            return massiv
+        }
+        return massiv.filter(item => {
+            return item.name.indexOf(term) > -1
+        })
+    }
+
+    onUpdateSearch = (str) => {
+        this.setState({ term: str })
+    }
 
     render() {
         const emp = this.state.data.length;
         const empIncrease = this.state.data.filter(item => item.increase).length;
         const { data } = this.state
+        const vissibleDB = this.searchEmp(data, this.term);
+
         return (
             <div className="app">
                 <AppInfo empCount={emp}
                     empIncrease={empIncrease} />
 
                 <div className="search-panel">
-                    <SearchPanel />
+                    <SearchPanel
+                        onUpdateSearch={this.onUpdateSearch} />
                     <AppFilter />
                 </div>
 
                 <EmpList
-                    DB={data}
+                    DB={vissibleDB}
                     onDeleteApp={this.deleteItem}
                     onToggle={this.ToggleRiseIncrease}
                 />
