@@ -18,7 +18,7 @@ class App extends Component {
                 { name: 'Ангелка Тролова', salary: 5000, increase: false, rise: false, id: 3 }
             ],
             term: '',
-            filter: 'over1000'
+            filter: 'all'
         }
 
         this.maxId = 4;
@@ -83,6 +83,21 @@ class App extends Component {
         }
     }
 
+	 onFilterSelect = (str) => {
+		this.setState({filter: str})
+	 }
+
+	 onUpdateSalary = (id, salary) => {
+		this.setState(state => ({
+			data: state.data.map(elem => {
+				if(elem.id === id) {
+					return {...elem, salary: salary}
+				}
+				return elem;
+			})
+		}))
+	}
+
     render() {
         const emp = this.state.data.length;
         const empIncrease = this.state.data.filter(item => item.increase).length;
@@ -97,13 +112,17 @@ class App extends Component {
                 <div className="search-panel">
                     <SearchPanel
                         onUpdateSearch={this.onUpdateSearch} />
-                    <AppFilter />
+                    <AppFilter
+						  filter={filter}
+						  onFilterSelect = {this.onFilterSelect}/>
                 </div>
 
                 <EmpList
                     DB={vissibleDB}
                     onDeleteApp={this.deleteItem}
                     onToggle={this.ToggleRiseIncrease}
+						  onUpdateSalary = {this.onUpdateSalary}
+
                 />
 
                 <EmpAddForm

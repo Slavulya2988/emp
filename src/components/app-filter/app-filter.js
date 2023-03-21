@@ -1,6 +1,6 @@
 import "./app-filter.css";
 
-const AppFilter = () => {
+const AppFilter = (props) => {
     //  btn-light
     //  btn-outline-light
     const buttonDB = [
@@ -9,11 +9,16 @@ const AppFilter = () => {
         { name: 'over1000', label: 'Зарплатка більше 1000$' }
     ]
 
-    // const clazz = 'btn-light'
+
     const buttons = buttonDB.map(item => {
+		const active = props.filter === item.name
+		const clazz = active ? 'btn-light' : 'btn-outline-light'
         return (
             <button type="button"
-                className="btn btn-light">
+                className = {`btn ${clazz}`}
+					 key={item.name}
+				    onClick={() => props.onFilterSelect(item.name)}
+					>
                 {item.label}
             </button>)
     })
