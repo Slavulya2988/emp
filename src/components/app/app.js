@@ -16,11 +16,13 @@ class App extends Component {
                 { name: 'Миколка Вершігорьский', salary: 800, increase: false, rise: true, id: 1 },
                 { name: 'Олежик Мурашенко', salary: 3000, increase: true, rise: false, id: 2 },
                 { name: 'Ангелка Тролова', salary: 5000, increase: false, rise: false, id: 3 }
-            ]
+            ],
+            term: '',
+            filter: 'over1000'
         }
 
         this.maxId = 4;
-        this.term = ''
+
     }
 
     deleteItem = (kod) => {
@@ -68,11 +70,24 @@ class App extends Component {
         this.setState({ term: str })
     }
 
+    filterEmp = (massiv, filter) => {
+        switch (filter) {
+            case 'rise':
+                return massiv.filter(item => { return item.rise })
+
+            case 'over1000':
+                return massiv.filter(item => { return item.salary > 1000 })
+
+            default:
+                return massiv
+        }
+    }
+
     render() {
         const emp = this.state.data.length;
         const empIncrease = this.state.data.filter(item => item.increase).length;
-        const { data } = this.state
-        const vissibleDB = this.searchEmp(data, this.term);
+        const { data, term, filter } = this.state
+        const vissibleDB = this.filterEmp(this.searchEmp(data, term), filter);
 
         return (
             <div className="app">
