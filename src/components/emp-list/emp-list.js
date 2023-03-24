@@ -2,7 +2,7 @@ import EmpListItem from '../emp-list-item/emp-list-item';
 
 import './emp-list.css';
 
-const EmpList = ({ DB, onDeleteApp, onToggle, onUpdateSalary}) => {
+const EmpList = ({ DB, onDeleteApp, onToggle, onUpdateSalary }) => {
 
     const elements = DB.map(item => {
         const { id, ...itemProps } = item;
@@ -14,7 +14,7 @@ const EmpList = ({ DB, onDeleteApp, onToggle, onUpdateSalary}) => {
                 {...itemProps}
                 onDeleteEL={() => onDeleteApp(id)}
                 onToggle={(e) => onToggle(id, e.currentTarget.getAttribute("data-toggle"))}
-					 onUpdateSalary = {(e) => onUpdateSalary(id, e.currentTarget.value)}
+                onUpdateSalary={(e) => onUpdateSalary(id, e.currentTarget.value)}
 
 
             />

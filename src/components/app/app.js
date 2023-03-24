@@ -83,20 +83,20 @@ class App extends Component {
         }
     }
 
-	 onFilterSelect = (str) => {
-		this.setState({filter: str})
-	 }
+    onFilterSelect = (str) => {
+        this.setState({ filter: str })
+    }
 
-	 onUpdateSalary = (id, salary) => {
-		this.setState(state => ({
-			data: state.data.map(elem => {
-				if(elem.id === id) {
-					return {...elem, salary: salary}
-				}
-				return elem;
-			})
-		}))
-	}
+    onUpdateSalary = (kod, salaryNew) => {
+        this.setState(state => ({
+            data: state.data.map(elem => {
+                if (elem.id === kod) {
+                    return { ...elem, salary: salaryNew }
+                }
+                return elem;
+            })
+        }))
+    }
 
     render() {
         const emp = this.state.data.length;
@@ -113,15 +113,15 @@ class App extends Component {
                     <SearchPanel
                         onUpdateSearch={this.onUpdateSearch} />
                     <AppFilter
-						  filter={filter}
-						  onFilterSelect = {this.onFilterSelect}/>
+                        filter={filter}
+                        onFilterSelect={this.onFilterSelect} />
                 </div>
 
                 <EmpList
                     DB={vissibleDB}
                     onDeleteApp={this.deleteItem}
                     onToggle={this.ToggleRiseIncrease}
-						  onUpdateSalary = {this.onUpdateSalary}
+                    onUpdateSalary={this.onUpdateSalary}
 
                 />
 
